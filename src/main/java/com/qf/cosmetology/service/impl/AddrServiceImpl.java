@@ -3,6 +3,7 @@ package com.qf.cosmetology.service.impl;
 import com.qf.cosmetology.entity.Addr;
 import com.qf.cosmetology.dao.AddrDao;
 import com.qf.cosmetology.service.AddrService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,7 +17,11 @@ import java.util.List;
  */
 @Service("addrService")
 public class AddrServiceImpl implements AddrService {
-    @Resource
+    //该层是实现对业务的逻辑判定，调用dao数据操作层
+    /**
+     * @Resource自动装配，根据名字去匹配对象
+     */
+    @Autowired(required = false) //根据类型去检测
     private AddrDao addrDao;
 
     /**
@@ -63,7 +68,7 @@ public class AddrServiceImpl implements AddrService {
     @Override
     public Addr update(Addr addr) {
         this.addrDao.update(addr);
-        return this.queryById(addr.getAId());
+        return this.queryById(addr.getaId());
     }
 
     /**
