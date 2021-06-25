@@ -1,6 +1,7 @@
 package com.qf.cosmetology.service;
 
 import com.qf.cosmetology.entity.Pic;
+import com.qf.cosmetology.result.ResponseData;
 
 import java.util.List;
 
@@ -53,4 +54,10 @@ public interface PicService {
      */
     boolean deleteById(Integer pId);
 
+    /**
+     * 通过图片类型获取对应轮播图或者是导航栏图片
+     * @param type
+     * @return
+     */
+    ResponseData queryByType(String type);
 }

@@ -79,5 +79,11 @@ public interface PicDao {
      */
     int deleteById(Integer pId);
 
+    /**
+     * 根据图片类型获取所有图片
+     * @param type
+     * @return
+     */
+    List<Pic> queryByType(String type);
 }
 

@@ -2,6 +2,8 @@ package com.qf.cosmetology.service.impl;
 
 import com.qf.cosmetology.entity.Pic;
 import com.qf.cosmetology.dao.PicDao;
+import com.qf.cosmetology.result.ResponseCode;
+import com.qf.cosmetology.result.ResponseData;
 import com.qf.cosmetology.service.PicService;
 import org.springframework.stereotype.Service;
 
@@ -75,5 +77,11 @@ public class PicServiceImpl implements PicService {
     @Override
     public boolean deleteById(Integer pId) {
         return this.picDao.deleteById(pId) > 0;
+    }
+
+    @Override
+    public ResponseData queryByType(String type) {
+        List<Pic> pics=picDao.queryByType(type);
+        return new ResponseData(ResponseCode.SUCCESS,pics);
     }
 }

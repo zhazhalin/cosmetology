@@ -32,7 +32,7 @@ import javax.annotation.Resource;
  */
 @Api("PicApi")
 @RestController
-@RequestMapping("/pics")
+@RequestMapping("pics")
 public class PicController {
     //responseBody  自动将对象转换成json数据格式
     /**
@@ -58,7 +58,12 @@ public class PicController {
     public ResponseData select(@PathVariable Integer id) {
         return new ResponseData(ResponseCode.SUCCESS,1);
     }
-
+    @ApiOperation(value = "queryByType",notes = "通过图片类型获取对应的图片信息")
+    @ApiImplicitParam(name = "type",value = "图片的类型")
+    @PostMapping("/{type}")//    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    public ResponseData queryByType(@PathVariable String type) {
+        return picService.queryByType(type);
+    }
     /**
      * 适用restful风格设计接口，数据交互方式为json格式
      * @param pic
