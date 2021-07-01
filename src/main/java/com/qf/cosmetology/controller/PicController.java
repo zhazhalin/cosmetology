@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * (Pic)表控制层
@@ -58,18 +60,40 @@ public class PicController {
     public ResponseData select(@PathVariable Integer id) {
         return new ResponseData(ResponseCode.SUCCESS,1);
     }
+
+    /**
+     * 局部跨级注解
+     * @param type
+     * @param response
+     * @return
+     */
+    @CrossOrigin
     @ApiOperation(value = "queryByType",notes = "通过图片类型获取对应的图片信息")
     @ApiImplicitParam(name = "type",value = "图片的类型")
     @PostMapping("/{type}")//    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public ResponseData queryByType(@PathVariable String type) {
+    public ResponseData queryByType(@PathVariable String type, HttpServletResponse response) {
+        /*//设置访问源，*代表所有，只针对简单跨域请求
+        response.setHeader("Access-Control-Allow-Origin","*");
+        //设置访问限制时间，在规定时间内可以不用再发送预检请求
+        response.setHeader("Access-Control-Max-Age","5000");
+        //设置请求头信息
+        response.setHeader("Access-Control-Headers","*");
+        //设置cookie的携带，值为boolean
+        response.setHeader("Access-Control-Allow-Credentials","true");
+        //设置请求方式POST、GET、DELETE、PATCH、PUT
+        response.setHeader("Access-Control-Allow-Methods","GET");*/
         return picService.queryByType(type);
+    }
+    @PostMapping("/")
+    public ResponseData query(@PathVariable String type) {
+        return new ResponseData(ResponseCode.SUCCESS,"成功了");
     }
     /**
      * 适用restful风格设计接口，数据交互方式为json格式
      * @param pic
      * @return
      */
-    @PostMapping("/")
+    @GetMapping("/")
     public Pic upPic(@RequestBody Pic pic) {
         System.out.println("哈哈哈");
         return pic;
