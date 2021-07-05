@@ -57,8 +57,8 @@ public class SubjectController {
      *
      * @return List
      */
-    @ApiOperation(value = "queryAll",notes = "根据按钮标题去查找对应的项目列表")
-    @ApiParam(name = "queryAll",value = "实体对象")
+    @ApiOperation(value = "queryByTitle",notes = "根据按钮标题去查找对应的项目列表")
+    @ApiParam(name = "title",value = "标题")
     @GetMapping("/type/{title}")
     public ResponseData queryByTitle(@PathVariable String title) {
         List<Subject> subjects= this.subjectService.queryByTitle(title);

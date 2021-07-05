@@ -39,6 +39,7 @@ public interface PicDao {
      */
     List<Pic> queryAll(Pic pic);
 
+    List<Pic> queryAllPic();
     /**
      * 新增数据
      *
@@ -85,5 +86,9 @@ public interface PicDao {
      * @return
      */
     List<Pic> queryByType(String type);
+
+    Integer getCount();
+
+    Integer updateStatus(@Param("id") Integer id, @Param("status") Integer status);
 }
 

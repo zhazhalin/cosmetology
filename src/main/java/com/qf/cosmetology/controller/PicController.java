@@ -1,5 +1,8 @@
 package com.qf.cosmetology.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
 import com.qf.cosmetology.entity.Pic;
 import com.qf.cosmetology.result.ResponseCode;
 import com.qf.cosmetology.result.ResponseData;
@@ -7,6 +10,8 @@ import com.qf.cosmetology.service.PicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -90,14 +95,32 @@ public class PicController {
     }
     /**
      * 适用restful风格设计接口，数据交互方式为json格式
-     * @param pic
+     * @param
      * @return
      */
-    @GetMapping("/")
-    public Pic upPic(@RequestBody Pic pic) {
-        System.out.println("哈哈哈");
-        return pic;
-//        return this.picService.queryById(pic.getpId());
+    @ApiOperation(value = "queryAll",notes = "查询图片")
+    @GetMapping("/all")
+    public ResponseData queryAll(Integer page,Integer limit) {
+        ResponseData responseData = picService.queryAllByLimit(page, limit);
+        return responseData;
     }
+    @ApiOperation(value = "updateStatus",notes = "通过图片id修改图片的发布状态")
+    @ApiImplicitParam(name = "id",value = "图片id")
+    @PatchMapping("/")
+    public ResponseData updateStatus(@RequestBody String  value) {
+        JSONObject jsonObject=JSONObject.parseObject(value);
+        Integer id = Integer.parseInt(jsonObject.getString("id"));
+        Integer status = Integer.parseInt(jsonObject.getString("status"));
+        ResponseData res=picService.updateStatus(id,status);
+        return res;
+    }
+    @ApiOperation(value = "delete",notes = "通过图片id删除图片")
+    @ApiImplicitParam(name = "id",value = "图片id")
+    @DeleteMapping("/")
+    public ResponseData delete(@RequestBody String  value) {
+        JSONObject jsonObject = JSONArray.parseObject(value);
+        JSONArray array = jsonObject.getJSONArray("data");
+        return picService.delete(array);
 
+    }
 }

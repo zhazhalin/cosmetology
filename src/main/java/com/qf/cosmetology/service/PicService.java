@@ -1,7 +1,9 @@
 package com.qf.cosmetology.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.qf.cosmetology.entity.Pic;
 import com.qf.cosmetology.result.ResponseData;
+import io.swagger.models.auth.In;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ public interface PicService {
      * @param limit  查询条数
      * @return 对象列表
      */
-    List<Pic> queryAllByLimit(int offset, int limit);
+    ResponseData queryAllByLimit(Integer offset, Integer limit);
 
     /**
      * 新增数据
@@ -60,4 +62,10 @@ public interface PicService {
      * @return
      */
     ResponseData queryByType(String type);
+
+    Object queryAll();
+
+    ResponseData updateStatus(Integer id, Integer status);
+
+    ResponseData delete(JSONArray array);
 }
